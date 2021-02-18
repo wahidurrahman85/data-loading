@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <h1>Wahidur </h1>
+        <ul id="user-info">
+
+        </ul>
+        <input id="title" type="text" placeholder="title">
+        <br>
+        <input id="body-container" type="text" placeholder="body">
+        <br>
+        <br>
+        <button id="submit" type="submit">submit</button>
+
+
+    </div>
+   
+    <script>
+        // fetch("https://jsonplaceholder.typicode.com/users")
+        // .then(res => res.json())
+        // .then(data => displayUserInfo(data))
+        // .catch(error => console.log(error))
+
+        // const post = { title: 'foo',  body: 'bar',  userId: 1, }
+
+        document.getElementById("submit").addEventListener('click', function(){
+            const title =document.getElementById("title").value;
+            const body = document.getElementById("body-container").value;
+            const post = {title: title, body: body};
+            postToServer(post);
+        })
+
+       function postToServer(postInfo){
+        fetch('https://jsonplaceholder.typicode.com/posts', {
+                method: 'POST',
+                body: JSON.stringify(postInfo),
+                headers: {
+                    'Content-type': 'application/json; charset=UTF-8',
+                },
+                })
+                .then(res => res.json())
+                .then(data => displayUserInfo(data))
+                .catch(error => alert("Please try again later"));
+       }
+
+
+
+
+
+        function displayUserInfo(user){
+            const ul = document.getElementById("user-info");
+            const userNames = user.map(user => user.body);
+            for (let i = 0; i < userNames.length; i++) {
+                const userName = userNames[i];
+                const li = document.createElement("li");
+                li.innerText = userName;
+                ul.appendChild(li);
+            }
+        }
+
+    </script>
+</body>
+</html>
